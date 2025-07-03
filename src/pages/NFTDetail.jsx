@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WalletContext } from "../contexts/WalletContext";
 import dummyNFTs from "../data/dummyNFTs";
 
@@ -8,12 +8,28 @@ function NFTDetail() {
   const nft = dummyNFTs.find((n) => n.id === id);
   const { wallet } = useContext(WalletContext);
   const [price, setPrice] = useState("");
-  const [listed, setListed] = useState(nft?.price !== null);
+  const [listedPrice, setListedPrice] = useState(null);
 
+  // Ambil listing dari localStorage saat pertama kali render
+  useEffect(() => {
+    const storedListings = JSON.parse(localStorage.getItem("prover_listings")) || {};
+    if (storedListings[id]) {
+      setListedPrice(storedListings[id]);
+    }
+  }, [id]);
+
+  // Fungsi untuk simpan harga ke localStorage
   const handleList = () => {
-    if (!price || isNaN(price)) return alert("Masukkan harga yang valid");
-    nft.price = price; // simpan ke memori (simulasi)
-    setListed(true);
+    if (!price || isNaN(price)) {
+      alert("Masukkan harga yang valid");
+      return;
+    }
+
+    const listings = JSON.parse(localStorage.getItem("prover_listings")) || {};
+    listings[id] = price;
+    localStorage.setItem("prover_listings", JSON.stringify(listings));
+    setListedPrice(price);
+    alert("NFT telah di-list!");
   };
 
   if (!nft) return <div className="p-6 text-red-500">NFT tidak ditemukan.</div>;
@@ -24,8 +40,8 @@ function NFTDetail() {
       <h2 className="text-2xl font-bold mb-2">{nft.name}</h2>
       <p className="mb-4">{nft.description}</p>
 
-      {listed ? (
-        <div className="text-green-400">NFT sudah di-list seharga {nft.price} ETH</div>
+      {listedPrice ? (
+        <div className="text-green-400">✅ NFT telah di-list seharga {listedPrice} ETH</div>
       ) : wallet ? (
         <div className="mt-4">
           <h4 className="mb-1 font-semibold">List NFT for Sale</h4>
@@ -47,7 +63,7 @@ function NFTDetail() {
           </div>
         </div>
       ) : (
-        <div className="text-yellow-400 mt-4">Login untuk bisa listing NFT.</div>
+        <div className="text-yellow-400 mt-4">🔒 Login untuk bisa listing NFT.</div>
       )}
     </div>
   );
