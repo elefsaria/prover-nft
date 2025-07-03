@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { WalletContext } from "../contexts/WalletContext";
+import ImportWallet from "./ImportWallet";
+
 
 function Navbar() {
   const { wallet, mnemonic, loginNewWallet } = useContext(WalletContext);
