@@ -15,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<NFTGrid />} />
             <Route path="/nft/:id" element={<NFTDetail />} />
+            <Route path="/my-nfts" element={<MyNFTs />} />
           </Routes>
         </div>
       </Router>
