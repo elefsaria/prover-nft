@@ -1,3 +1,4 @@
+// src/utils/wallet.js
 import { ethers } from "ethers";
 
 export const createNewWallet = () => {
