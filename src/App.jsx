@@ -1,14 +1,21 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import NFTDetail from "./pages/NFTDetail";
+import NFTGrid from "./components/NFTGrid";
 import { WalletProvider } from "./contexts/WalletContext";
 
 function App() {
   return (
     <WalletProvider>
-      <div className="min-h-screen">
-        <Navbar />
-        <Home />
-      </div>
+      <Router>
+        <div className="min-h-screen bg-black text-white">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<NFTGrid />} />
+            <Route path="/nft/:id" element={<NFTDetail />} />
+          </Routes>
+        </div>
+      </Router>
     </WalletProvider>
   );
 }
