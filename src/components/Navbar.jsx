@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { WalletContext } from "../contexts/WalletContext";
 import ImportWallet from "./ImportWallet";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const { wallet, mnemonic, loginNewWallet } = useContext(WalletContext);
@@ -14,7 +15,7 @@ function Navbar() {
         <h1 className="text-xl font-bold">Prover NFT</h1>
       </div>
 
-      {/* Wallet & Action Area */}
+      {/* Area Login / Info Wallet */}
       <div className="text-right w-full md:w-auto">
         {wallet ? (
           <>
@@ -23,7 +24,7 @@ function Navbar() {
               Wallet: {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
             </div>
 
-            {/* Tombol Lihat Seed Phrase */}
+            {/* Tombol Tampilkan Seed Phrase */}
             <button
               onClick={() => setShowMnemonic(!showMnemonic)}
               className="text-xs underline text-blue-400 hover:text-blue-300"
@@ -37,6 +38,14 @@ function Navbar() {
                 {mnemonic}
               </p>
             )}
+
+            {/* Link ke My NFTs */}
+            <Link
+              to="/my-nfts"
+              className="block mt-2 text-sm underline text-blue-400 hover:text-blue-300"
+            >
+              🎒 Lihat My NFTs
+            </Link>
           </>
         ) : (
           <>
