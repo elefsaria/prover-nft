@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import NFTDetail from "./pages/NFTDetail";
 import NFTGrid from "./components/NFTGrid";
 import { WalletProvider } from "./contexts/WalletContext";
+import MyNFTs from "./pages/MyNFTs";
+
 
 function App() {
   return (
